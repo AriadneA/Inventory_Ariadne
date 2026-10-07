@@ -64,6 +64,9 @@ android {
     namespace = "com.example.inventory"
 }
 
+// Resgata a versão definida no build.gradle raiz com fallback seguro
+val roomVersion = rootProject.extra["room_version"] as? String ?: "2.6.1"
+
 dependencies {
     // Import the Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.11.00"))
@@ -76,11 +79,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.4")
 
-    //Room
-    implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
+    // Core
     implementation("androidx.core:core-ktx:1.15.0")
-    ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
-    implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
+
+    // Room Database
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
 
     // Testing
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
